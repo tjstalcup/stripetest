@@ -1,14 +1,25 @@
 $(document).ready(function(){
 	var price = 5;
 	var total = 0;
+	var qty = 0;
 	$('#qty').change(function(){
-		var qty = Math.round($(this).val());
+		qty = Math.round($(this).val());
 		if(qty!=''){
-			var total = price * qty;
-			$('#total').text('$'+total+'.00');
-			$('#totalPrice').val(total+'00');
+			calculatePrice();
 		}
 	});
+
+	$('input[type="radio"]').click(function(){
+		price = +($(this).attr('data-price'));
+		calculatePrice();
+	});
+
+	function calculatePrice(){
+		var total = price * qty;
+		var total = parseFloat(Math.round(total * 100) / 100).toFixed(2);
+		$('#total').text('$'+total);
+		$('#totalPrice').val(total+'00');
+	}
 
 	var handler = StripeCheckout.configure({
 	  key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',

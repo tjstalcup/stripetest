@@ -18,10 +18,10 @@
 		  <input type="number" class="form-control" name="qty" id="qty" placeholder="Quantity"/>
 		  
 		  <p>Which Burrito do you want?</p>
-		  <input type="radio" name="burrito" value="beefBean"/>Beef & Bean
-		  <input type="radio" name="burrito" value="chickenBean"/>Chicken & Bean
-		  <input type="radio" name="burrito" value="beef"/>Beef
-		  <input type="radio" name="burrito" value="chicken"/>Chicken
+		  <input type="radio" name="burrito" data-price="5.00" value="beefBean" checked="checked"/>Beef & Bean
+		  <input type="radio" name="burrito" data-price="7.00" value="chickenBean"/>Chicken & Bean
+		  <input type="radio" name="burrito" data-price="4.00" value="beef"/>Beef
+		  <input type="radio" name="burrito" data-price="4.50" value="chicken"/>Chicken
 		  
 		  <p><strong>Total: </strong><span id="total">$0.00</span></p>
 		  <input type="hidden" id="totalPrice" value="0000"/>
@@ -33,7 +33,7 @@
 	</div>
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>	
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="js/script.js"></script>
 </body>
