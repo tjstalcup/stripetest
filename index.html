@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Stripe Test</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+	<div class="container">
+		<h1>Stripe Test</h1>
+		<form action="process.php" method="POST" id="payment-form">
+		  <input type="text" class="form-control" name="name" placeholder="Name"/>
+		  <input type="text" class="form-control" name="date" placeholder="Delivery Date"/>
+		  
+		  <input type="number" class="form-control" name="qty" id="qty" placeholder="Quantity"/>
+		  
+		  <p>Which Burrito do you want?</p>
+		  <input type="radio" name="burrito" value="beefBean"/>Beef & Bean
+		  <input type="radio" name="burrito" value="chickenBean"/>Chicken & Bean
+		  <input type="radio" name="burrito" value="beef"/>Beef
+		  <input type="radio" name="burrito" value="chicken"/>Chicken
+		  
+		  <p><strong>Total: </strong><span id="total">$0.00</span></p>
+		  <input type="hidden" id="totalPrice" value="0000"/>
+
+		  <script src="https://checkout.stripe.com/checkout.js"></script>
+
+		  <button id="customButton">Purchase</button>
+		</form>
+	</div>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+  var handler = StripeCheckout.configure({
+    key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh',
+    image: 'img/burrito.png',
+    locale: 'auto',
+    token: function(token) {
+      // Use the token to create the charge with a server-side script.
+      // You can access the token ID with `token.id`
+      var $form = $('#payment-form');
+      $form.append($('<input type="hidden" name="stripeToken" />').val(token.id));
+      $form.append($('<input type="hidden" name="stripeEmail" />').val(token.email));
+      $form.submit();
+    }
+  });
+
+  $('#customButton').on('click', function(e) {
+    // Open Checkout with further options
+    var total = Math.round($('#totalPrice').val());
+    handler.open({
+      name: 'Burritos4Basis',
+      description: 'Burritos',
+      amount: total
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation
+  $(window).on('popstate', function() {
+    handler.close();
+  });
+</script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
